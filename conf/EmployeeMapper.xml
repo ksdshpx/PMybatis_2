@@ -2,8 +2,16 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.ksdshpx.mybatis.EmployeeMapper">
+<mapper namespace="cn.ksdshpx.mybatis.dao.EmployeeMapper">
+	<!-- 
+		namespace:指定为接口的全类名
+	 -->
 	<select id="selectEmp" resultType="cn.ksdshpx.mybatis.beans.Employee">
+		select id,last_name as lastName,gender,email from tbl_employee where id = #{id}
+	</select>
+	
+	<!-- public Employee getEmployeeById(Integer id); -->
+	<select id="getEmployeeById" resultType="cn.ksdshpx.mybatis.beans.Employee">
 		select id,last_name as lastName,gender,email from tbl_employee where id = #{id}
 	</select>
 </mapper>
