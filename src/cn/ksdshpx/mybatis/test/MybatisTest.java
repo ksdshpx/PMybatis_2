@@ -20,9 +20,13 @@ public class MybatisTest {
 
 	/**
 	 * 1.根据xml配置文件（全局配置文件）创建一个SqlSessionFactory对象 有数据源一些运行环境信息
-	 * 2.sql映射文件：配置了每一个sql以及sql的封装规则等 3.将sql映射文件注册在全局配置文件中 4.写代码
-	 * 1)根据全局配置文件得到sqlSessionFactory 2)使用sqlSessionFactory获取到sqlSession对象来执行增删改查，
-	 * 一个sqlSession就代表和数据库的一次会话，用完关闭 3)使用sql的唯一标识来告诉Mybatis来执行哪个sql,sql都是保存在sql映射文件中
+	 * 2.sql映射文件：配置了每一个sql以及sql的封装规则等 
+	 * 3.将sql映射文件注册在全局配置文件中 
+	 * 4.写代码
+	 * 	1)根据全局配置文件得到sqlSessionFactory 
+	 * 	2)使用sqlSessionFactory获取到sqlSession对象来执行增删改查，
+	  *           一个sqlSession就代表和数据库的一次会话，用完关闭，和Connection一样都是非线程安全的，每次使用都应该使用新的对象
+	 *  3)使用sql的唯一标识来告诉Mybatis来执行哪个sql,sql都是保存在sql映射文件中
 	 */
 	@Test
 	public void test() throws IOException {
