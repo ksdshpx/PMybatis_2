@@ -26,6 +26,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		-->
 		<package name="cn.ksdshpx.mybatis.beans"/>
 	</typeAliases>
+	<!-- 
+		4、MyBatis可以配置多种环境
+			  environment：配置一个具体的环境信息
+				 transactionManager:事务管理器(JDBC(JdbcTransactionFactory)或MANAGED(ManagedTransactionFactory))
+				 dataSource:数据源(UNPOOLED(UnpooledDataSourceFactory)或POOLED(PooledDataSourceFactory)或JNDI(JndiDataSourceFactory))
+	 -->
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -35,6 +41,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 					value="${jdbc.url}" />
 				<property name="username" value="${jdbc.user}" />
 				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+		<environment id="test">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+			
 			</dataSource>
 		</environment>
 	</environments>
