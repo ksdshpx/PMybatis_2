@@ -15,6 +15,17 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
+	<!-- 
+		3、typeAliases：别名处理器，可以为java类型起别名，别名不区分大小写
+	 -->
+	<typeAliases>
+		<!-- <typeAlias type="cn.ksdshpx.mybatis.beans.Employee" alias="employee"/> -->
+		<!-- 
+			package:为某个包下的所有类批量起别名,若有名称重复，使用@Alias注解具体指定
+				name:指定包名(为当前包以及下面所有的后代包的每一个类起一个默认别名(类名小写))
+		-->
+		<package name="cn.ksdshpx.mybatis.beans"/>
+	</typeAliases>
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
