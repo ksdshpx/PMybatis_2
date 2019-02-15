@@ -38,7 +38,7 @@ public class MybatisTest {
 		try {
 			// statement:sql语句的唯一标识
 			// parameter:执行sql语句需要的参数
-			Employee employee = sqlSession.selectOne("cn.ksdshpx.mybatis.EmployeeMapper.selectEmp", 1);
+			Employee employee = sqlSession.selectOne("cn.ksdshpx.mybatis.dao.EmployeeMapper.selectEmp", 1);
 			System.out.println(employee);
 		} finally {
 			sqlSession.close();
