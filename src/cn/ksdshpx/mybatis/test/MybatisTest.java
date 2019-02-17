@@ -94,13 +94,14 @@ public class MybatisTest {
 			// 3.得到接口的代理类对象
 			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 			// 添加
-			//Employee employee = new Employee("Jerry", "1", "jerry@163.com");
-			//mapper.addEmployee(employee);
+			Employee employee = new Employee("Jerry", "1", "jerry@163.com");
+			mapper.addEmployee(employee);
+			System.out.println(employee.getId());
 			// 更新
 			//Employee employee = new Employee(2,"Jerry", "1", "jerry@sfit.com");			
 			//mapper.updateEmployee(employee);
 			// 删除
-			mapper.deleteEmployeeById(2);
+			// mapper.deleteEmployeeById(2);
 			//手动提交
 			sqlSession.commit();
 		} finally {
