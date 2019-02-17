@@ -8,4 +8,10 @@ import cn.ksdshpx.mybatis.beans.Employee;
  */
 public interface EmployeeMapper {
 	public Employee getEmployeeById(Integer id);
+
+	public void addEmployee(Employee employee);
+
+	public void updateEmployee(Employee employee);
+
+	public void deleteEmployeeById(Integer id);
 }

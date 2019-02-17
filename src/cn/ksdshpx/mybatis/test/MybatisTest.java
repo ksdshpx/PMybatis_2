@@ -81,4 +81,30 @@ public class MybatisTest {
 			sqlSession.close();
 		}
 	}
+	
+	@Test
+	public void test03() throws IOException {
+		// 1.从全局配置文件中获取SqlSessionFactory对象
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		// 2.通过SqlSessionFactory得到SqlSession,获取到的sqlSession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			// 3.得到接口的代理类对象
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			// 添加
+			//Employee employee = new Employee("Jerry", "1", "jerry@163.com");
+			//mapper.addEmployee(employee);
+			// 更新
+			//Employee employee = new Employee(2,"Jerry", "1", "jerry@sfit.com");			
+			//mapper.updateEmployee(employee);
+			// 删除
+			mapper.deleteEmployeeById(2);
+			//手动提交
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
 }
