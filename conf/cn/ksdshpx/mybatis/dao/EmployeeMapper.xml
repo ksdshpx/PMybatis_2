@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		useGeneratedKeys="true":使用自增主键获取主键值策略
 		keyProperty:指定对应的主键属性，也就是MyBatis获取到主键值以后，将这个值封装给JavaBean的哪个属性
 	-->
-	<insert id="addEmployee" parameterType="cn.ksdshpx.mybatis.beans.Employee" useGeneratedKeys="true" keyProperty="id">
+	<insert id="addEmployee" parameterType="cn.ksdshpx.mybatis.beans.Employee" useGeneratedKeys="true" keyProperty="id" databaseId="mysql">
 		insert into tbl_employee(last_name,email,gender) values (#{lastName},#{email},#{gender})
 	</insert>
 	<!-- public void updateEmployee(Employee employee); -->
