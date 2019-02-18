@@ -36,4 +36,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteEmployeeById">
 		delete from tbl_employee where id = #{id}
 	</delete>
+	
+	<!-- public Employee getEmployeeByIdAndLastName(Integer id, String lastName); -->
+	<select id="getEmployeeByIdAndLastName" resultType="cn.ksdshpx.mybatis.beans.Employee">
+		<!-- 
+			多个参数方式一
+			select * from tbl_employee where id = #{param1} and last_name = #{param2} 
+		-->
+		<!-- 
+			多个参数方式二
+			select * from tbl_employee where id = #{0} and last_name = #{1} 
+		-->
+		<!-- 命名参数 -->
+		select * from tbl_employee where id = #{id} and last_name = #{lastName} 
+	</select>
 </mapper>

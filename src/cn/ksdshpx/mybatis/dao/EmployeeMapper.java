@@ -1,5 +1,7 @@
 package cn.ksdshpx.mybatis.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.ksdshpx.mybatis.beans.Employee;
 
 /**
@@ -8,6 +10,8 @@ import cn.ksdshpx.mybatis.beans.Employee;
  */
 public interface EmployeeMapper {
 	public Employee getEmployeeById(Integer id);
+
+	public Employee getEmployeeByIdAndLastName(@Param("id")Integer id, @Param("lastName")String lastName);
 
 	public void addEmployee(Employee employee);
 
