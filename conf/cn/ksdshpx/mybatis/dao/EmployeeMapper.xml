@@ -62,4 +62,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getEmps" resultType="cn.ksdshpx.mybatis.beans.Employee">
 		select * from tbl_employee
 	</select>
+	
+	<!-- public Map<String,Object> getEmpByIdReturnMap(Integer id); -->
+	<select id="getEmpByIdReturnMap" resultType="map">
+		select * from tbl_employee where id = #{id}
+	</select>
+	
+	<!-- public Map<Integer,Employee> getEmpsReturnMap(); -->
+	<select id="getEmpsReturnMap" resultType="cn.ksdshpx.mybatis.beans.Employee">
+		select * from tbl_employee
+	</select>
 </mapper>

@@ -3,6 +3,7 @@ package cn.ksdshpx.mybatis.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import cn.ksdshpx.mybatis.beans.Employee;
@@ -24,5 +25,14 @@ public interface EmployeeMapper {
 
 	public void deleteEmployeeById(Integer id);
 	
+	//返回List
 	public List<Employee> getEmps();
+	
+	//返回一条记录的map,key为列名，值为列的值
+	public Map<String,Object> getEmpByIdReturnMap(Integer id);
+	
+	//多条记录封装map
+	//告诉MyBatis封装这个map的时候使用哪个属性作为map的key
+	@MapKey("id")
+	public Map<Integer,Employee> getEmpsReturnMap();
 }
