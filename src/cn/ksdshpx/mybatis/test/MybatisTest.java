@@ -15,6 +15,7 @@ import org.junit.Test;
 import cn.ksdshpx.mybatis.beans.Employee;
 import cn.ksdshpx.mybatis.dao.EmployeeMapper;
 import cn.ksdshpx.mybatis.dao.EmployeeMapperAnnotation;
+import cn.ksdshpx.mybatis.dao.EmployeeMapperPlus;
 
 /**
  * @author peng.x
@@ -202,6 +203,24 @@ public class MybatisTest {
 			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 			Map<Integer, Employee> map = mapper.getEmpsReturnMap();
 			System.out.println(map);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Test
+	public void test09() throws IOException {
+		// 1.从全局配置文件中获取SqlSessionFactory对象
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		// 2.通过SqlSessionFactory得到SqlSession,获取到的sqlSession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			// 3.得到接口的代理类对象
+			EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+			Employee employee = mapper.getEmployeeById(1);
+			System.out.println(employee);
 		} finally {
 			sqlSession.close();
 		}

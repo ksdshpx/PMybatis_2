@@ -90,6 +90,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	-->
 	<mappers>
 		<mapper resource="cn/ksdshpx/mybatis/dao/EmployeeMapper.xml" />
+		<mapper resource="cn/ksdshpx/mybatis/dao/EmployeeMapperPlus.xml" />
 		<mapper class="cn.ksdshpx.mybatis.dao.EmployeeMapperAnnotation"/>
 		<!-- 批量注册，映射文件和接口必须同名同位置 -->
 		<!-- <package name="cn.ksdshpx.mybatis.dao"/> -->
