@@ -1,5 +1,6 @@
 package cn.ksdshpx.mybatis.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +23,6 @@ public interface EmployeeMapper {
 	public void updateEmployee(Employee employee);
 
 	public void deleteEmployeeById(Integer id);
+	
+	public List<Employee> getEmps();
 }

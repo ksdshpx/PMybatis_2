@@ -55,4 +55,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getEmployeeByMap" resultType="cn.ksdshpx.mybatis.beans.Employee">
 		select * from tbl_employee where id = #{id} and last_name = #{lastName} 
 	</select>
+	
+	<!-- public List<Employee> getEmps(); 
+		resultType:返回值为集合中元素的类型
+	-->
+	<select id="getEmps" resultType="cn.ksdshpx.mybatis.beans.Employee">
+		select * from tbl_employee
+	</select>
 </mapper>

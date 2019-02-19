@@ -3,6 +3,7 @@ package cn.ksdshpx.mybatis.test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
@@ -145,6 +146,26 @@ public class MybatisTest {
 			map.put("lastName", "Tom");
 			Employee employee = mapper.getEmployeeByMap(map);
 			System.out.println(employee);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Test
+	public void test06() throws IOException {
+		// 1.从全局配置文件中获取SqlSessionFactory对象
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		// 2.通过SqlSessionFactory得到SqlSession,获取到的sqlSession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			// 3.得到接口的代理类对象
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			List<Employee> emps = mapper.getEmps();
+			for (Employee employee : emps) {
+				System.out.println(employee);
+			}
 		} finally {
 			sqlSession.close();
 		}
