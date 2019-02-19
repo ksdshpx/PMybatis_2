@@ -5,19 +5,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="cn.ksdshpx.mybatis.dao.EmployeeMapperPlus">
 	<!-- public Employee getEmployeeById(Integer id); -->
 	<select id="getEmployeeById" resultMap="MyEmp">
-		select * from tbl_employee where id = #{id}
+		select * from
+		tbl_employee where id = #{id}
 	</select>
 	<!-- 自动某个javabean的封装规则 -->
-	<resultMap type="cn.ksdshpx.mybatis.beans.Employee" id="MyEmp">
-		<!-- 指定主键类的封装规则 
-			 column:指定哪一列
-			 property:指定对应的javabean属性
-		-->
-		<id column="id" property="id"/>
+	<resultMap type="cn.ksdshpx.mybatis.beans.Employee"
+		id="MyEmp">
+		<!-- 指定主键类的封装规则 column:指定哪一列 property:指定对应的javabean属性 -->
+		<id column="id" property="id" />
 		<!-- 定义普通列映射规则 -->
-		<result column="last_name" property="lastName"/>
+		<result column="last_name" property="lastName" />
 		<!-- 其他不指定的列会自动封装：但是推荐全部写上 -->
-		<result column="emali" property="email"/>
+		<result column="emali" property="email" />
+		<result column="gender" property="gender" />
+	</resultMap>
+
+	<!-- public Employee getEmpAndDeptById(Integer id); \
+		联合查询：级联属性封装结果集
+	-->
+	<select id="getEmpAndDeptById" resultMap="MyEmpAndDept">
+		SELECT e.id,e.last_name,e.gender,d.id did,d.dept_name
+		FROM tbl_employee e,tbl_dept d
+		WHERE e.d_id = d.id and e.id = #{id}
+	</select>
+	<resultMap type="cn.ksdshpx.mybatis.beans.Employee" id="MyEmpAndDept">
+		<id column="id" property="id"/>
+		<result column="last_name" property="lastName"/>
 		<result column="gender" property="gender"/>
+		<result column="did" property="dept.id"/>
+		<result column="dept_name" property="dept.deptName"/>
 	</resultMap>
 </mapper>
