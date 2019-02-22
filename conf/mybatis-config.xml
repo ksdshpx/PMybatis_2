@@ -14,6 +14,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<!-- 支持懒加载 -->
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<setting name="aggressiveLazyLoading" value="false"/>
 	</settings>
 	<!-- 
 		3、typeAliases：别名处理器，可以为java类型起别名，别名不区分大小写

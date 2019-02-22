@@ -65,4 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<association property="dept" select="cn.ksdshpx.mybatis.dao.DepartmentMapper.getDepartmentById" column="d_id">
 		</association>
 	</resultMap>
+	
+	<!-- 分步查询之懒加载 
+		 在全局配置文件中加上两个配置
+	-->
 </mapper>
