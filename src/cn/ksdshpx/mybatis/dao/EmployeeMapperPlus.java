@@ -9,4 +9,5 @@ import cn.ksdshpx.mybatis.beans.Employee;
 public interface EmployeeMapperPlus {
 	public Employee getEmployeeById(Integer id);
 	public Employee getEmpAndDeptById(Integer id);
+	public Employee getEmpAndDeptByIdStep(Integer id);
 }

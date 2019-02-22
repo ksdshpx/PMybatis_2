@@ -46,4 +46,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="dept_name" property="deptName"/>
 		</association>
 	</resultMap>
+	
+	<!-- 使用association进行分步查询-->
+	<!-- public Employee getEmpAndDeptByIdStep(Integer id); -->
+	<select id="getEmpAndDeptByIdStep" resultMap="MyEmpByStep">
+		select * from tbl_employee where id = #{id}
+	</select>
+	<resultMap type="cn.ksdshpx.mybatis.beans.Employee" id="MyEmpByStep">
+		<id column="id" property="id"/>
+		<result column="last_name" property="lastName"/>
+		<result column="email" property="email"/>
+		<result column="gender" property="gender"/>
+		<!--  
+			association:定义关联对象的封装规则
+			select:表明当前属性是调用select指定的方法查出的结果
+			column:指定将哪一列的值传给这个方法
+		-->
+		<association property="dept" select="cn.ksdshpx.mybatis.dao.DepartmentMapper.getDepartmentById" column="d_id">
+		</association>
+	</resultMap>
 </mapper>
