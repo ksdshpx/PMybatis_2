@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 使用association进行分步查询-->
 	<!-- public Employee getEmpAndDeptByIdStep(Integer id); -->
-	<select id="getEmpAndDeptByIdStep" resultMap="MyEmpByStep">
+	<select id="getEmpAndDeptByIdStep" resultMap="MyEmpDis">
 		select * from tbl_employee where id = #{id}
 	</select>
 	<resultMap type="cn.ksdshpx.mybatis.beans.Employee" id="MyEmpByStep">
@@ -76,4 +76,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from tbl_employee where d_id = #{deptId}
 	</select>
 	
+	<!-- MyBatis可以使用discriminator判断某列的值，根据该列的值改变封装行为 
+		 封装Employee
+		 	如果查出的是女生：就把部门信息查询出来，否则就不查出来
+		 	如果查出的是男生：就把last_name这列值赋值给email
+	-->
+	<resultMap type="cn.ksdshpx.mybatis.beans.Employee" id="MyEmpDis">
+		<id column="id" property="id"/>
+		<result column="last_name" property="lastName"/>
+		<result column="email" property="email"/>
+		<result column="gender" property="gender"/>
+		<!-- column:指定要判别的列
+			 javaType:列值对应的java类型
+		 -->
+		<discriminator javaType="string" column="gender">
+			<!-- 女生 -->
+			<case value="0" resultType="cn.ksdshpx.mybatis.beans.Employee">
+				<association property="dept" select="cn.ksdshpx.mybatis.dao.DepartmentMapper.getDepartmentById" column="d_id">
+				</association>
+			</case>
+			<!-- 男生 -->
+			<case value="1" resultType="cn.ksdshpx.mybatis.beans.Employee">
+				<id column="id" property="id"/>
+				<result column="last_name" property="lastName"/>
+				<result column="last_name" property="email"/>
+				<result column="gender" property="gender"/>
+			</case>
+		</discriminator>
+	</resultMap>
 </mapper>

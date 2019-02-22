@@ -258,9 +258,9 @@ public class MybatisTest {
 		try {
 			// 3.得到接口的代理类对象
 			EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
-			Employee employee = mapper.getEmpAndDeptByIdStep(1);
-			System.out.println(employee.getEmail());
-			//System.out.println(employee.getDept());
+			Employee employee = mapper.getEmpAndDeptByIdStep(2);
+			System.out.println(employee);
+			System.out.println(employee.getDept());
 		} finally {
 			sqlSession.close();
 		}
