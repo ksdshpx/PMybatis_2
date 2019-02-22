@@ -34,7 +34,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</collection>
 	</resultMap>
 	
-	<!-- 分步查询 -->
+	<!-- collection:分步查询 
+		 扩展：分步查询传递多列值===>将多列值封装map传递  column="{key1=column1,key2=column2}"
+		 fetchType:默认为lazy,表示延迟加载，设置为eage表示立即加载，优先级高于全局配置文件的
+	-->
 	<!-- public Department getDeptAndEmpByIdStep(Integer id); -->
 	<select id="getDeptAndEmpByIdStep" resultMap="MyDeptAndEmpStep">
 		select id,dept_name from tbl_dept where id = #{id}
