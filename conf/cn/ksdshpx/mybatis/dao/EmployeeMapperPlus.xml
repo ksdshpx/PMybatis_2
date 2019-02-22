@@ -69,4 +69,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 分步查询之懒加载 
 		 在全局配置文件中加上两个配置
 	-->
+	
+	<!-- collection用 -->
+	<!-- public List<Employee> getEmpsByDeptId(Integer deptId); -->
+	<select id="getEmpsByDeptId" resultType="cn.ksdshpx.mybatis.beans.Employee">
+		select * from tbl_employee where d_id = #{deptId}
+	</select>
+	
 </mapper>

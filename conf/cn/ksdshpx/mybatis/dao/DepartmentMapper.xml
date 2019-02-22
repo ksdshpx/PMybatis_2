@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON e.d_id = d.id
 		WHERE d.id = #{id}
 	</select>
+	<!-- 嵌套结果集的方式 -->
 	<resultMap type="cn.ksdshpx.mybatis.beans.Department" id="MyDeptAndEmp">
 		<id column="did" property="id"/>
 		<result column="dept_name" property="deptName"/>
@@ -30,6 +31,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="last_name" property="lastName"/>
 			<result column="email" property="email"/>
 			<result column="gender" property="gender"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 分步查询 -->
+	<!-- public Department getDeptAndEmpByIdStep(Integer id); -->
+	<select id="getDeptAndEmpByIdStep" resultMap="MyDeptAndEmpStep">
+		select id,dept_name from tbl_dept where id = #{id}
+	</select>
+	<resultMap type="cn.ksdshpx.mybatis.beans.Department" id="MyDeptAndEmpStep">
+		<id column="id" property="id"/>
+		<result column="dept_name" property="deptName"/>
+		<collection property="emps" select="cn.ksdshpx.mybatis.dao.EmployeeMapperPlus.getEmpsByDeptId" column="id">
 		</collection>
 	</resultMap>
 </mapper>
