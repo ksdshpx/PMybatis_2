@@ -1,5 +1,7 @@
 package cn.ksdshpx.mybatis.beans;
 
+import java.util.List;
+
 /**
  * @author peng.x
  * @date 2019年2月19日 上午10:31:44
@@ -7,6 +9,15 @@ package cn.ksdshpx.mybatis.beans;
 public class Department {
 	private Integer id;
 	private String deptName;
+	private List<Employee> emps;
+
+	public List<Employee> getEmps() {
+		return emps;
+	}
+
+	public void setEmps(List<Employee> emps) {
+		this.emps = emps;
+	}
 
 	public Integer getId() {
 		return id;
@@ -26,7 +37,7 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", deptName=" + deptName + "]";
+		return "Department [id=" + id + ", deptName=" + deptName + ", emps=" + emps + "]";
 	}
 
 }

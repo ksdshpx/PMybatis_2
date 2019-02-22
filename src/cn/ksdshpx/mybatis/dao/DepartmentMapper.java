@@ -8,4 +8,5 @@ import cn.ksdshpx.mybatis.beans.Department;
  */
 public interface DepartmentMapper {
 	public Department getDepartmentById(Integer id);
+	public Department getDeptAndEmpById(Integer id);
 }

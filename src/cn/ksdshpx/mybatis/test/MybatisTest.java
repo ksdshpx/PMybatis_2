@@ -12,7 +12,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
+import cn.ksdshpx.mybatis.beans.Department;
 import cn.ksdshpx.mybatis.beans.Employee;
+import cn.ksdshpx.mybatis.dao.DepartmentMapper;
 import cn.ksdshpx.mybatis.dao.EmployeeMapper;
 import cn.ksdshpx.mybatis.dao.EmployeeMapperAnnotation;
 import cn.ksdshpx.mybatis.dao.EmployeeMapperPlus;
@@ -259,6 +261,25 @@ public class MybatisTest {
 			Employee employee = mapper.getEmpAndDeptByIdStep(1);
 			System.out.println(employee.getEmail());
 			//System.out.println(employee.getDept());
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Test
+	public void test12() throws IOException {
+		// 1.从全局配置文件中获取SqlSessionFactory对象
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		// 2.通过SqlSessionFactory得到SqlSession,获取到的sqlSession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			// 3.得到接口的代理类对象
+			DepartmentMapper mapper = sqlSession.getMapper(DepartmentMapper.class);
+			Department dept = mapper.getDeptAndEmpById(1);
+			System.out.println(dept);
+			System.out.println(dept.getEmps());
 		} finally {
 			sqlSession.close();
 		}
