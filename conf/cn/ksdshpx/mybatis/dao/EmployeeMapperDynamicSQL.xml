@@ -5,21 +5,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="cn.ksdshpx.mybatis.dao.EmployeeMapperDynamicSQL">
 	<!-- public List<Employee> getEmpsByCondition(Employee employee); -->
 	<select id="getEmpsByCondition" resultType="cn.ksdshpx.mybatis.beans.Employee">
-		select * 
-		from tbl_employee 
+		select *
+		from tbl_employee
 		<where>
 			<if test="id!=null">
-				id = #{id} 
+				id = #{id}
 			</if>
 			<if test="lastName!=null and lastName!=''">
-				and last_name = #{lastName} 
+				and last_name = #{lastName}
 			</if>
 			<if test="email!=null and email!=''">
-				and email = #{email} 
+				and email = #{email}
 			</if>
 			<if test="gender==0 or gender==1">
 				and gender = #{gender}
 			</if>
 		</where>
+	</select>
+
+	<!-- public List<Employee> getEmpsByConditionTrim(Employee employee); -->
+	<select id="getEmpsByConditionTrim" resultType="cn.ksdshpx.mybatis.beans.Employee">
+		select *
+		from tbl_employee
+		<!-- 
+			prefix:前缀，trim标签体中是整个字符串拼串后的结果，prefix就是给整个字符串加一个前缀
+			prefixOverrides:前缀覆盖，去掉整个字符串前面多余的字符
+			suffix:后缀，给拼串后的字符串加一个后缀
+			suffixOverrides:后缀覆盖，去掉整个字符串后面多余的字符
+		 -->
+		<trim prefix="where" prefixOverrides="" suffix="" suffixOverrides="and">
+			<if test="id!=null">
+				id = #{id} and
+			</if>
+			<if test="lastName!=null and lastName!=''">
+			    last_name = #{lastName} and
+			</if>
+			<if test="email!=null and email!=''">
+			    email = #{email} and
+			</if>
+			<if test="gender==0 or gender==1">
+				gender = #{gender}
+			</if>
+		</trim>
 	</select>
 </mapper>

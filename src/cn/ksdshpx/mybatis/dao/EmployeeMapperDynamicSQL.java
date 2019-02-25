@@ -11,4 +11,6 @@ import cn.ksdshpx.mybatis.beans.Employee;
 public interface EmployeeMapperDynamicSQL {
 	//查询员工，携带了哪个字段，就把哪个字段带上
 	public List<Employee> getEmpsByCondition(Employee employee);
+	
+	public List<Employee> getEmpsByConditionTrim(Employee employee);
 }
