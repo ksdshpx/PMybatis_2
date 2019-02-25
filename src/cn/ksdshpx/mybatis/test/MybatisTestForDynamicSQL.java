@@ -29,7 +29,7 @@ public class MybatisTestForDynamicSQL {
 		try {
 			// 3.得到接口的代理类对象
 			EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
-			Employee employee = new Employee(1, "Tom", "0", "");
+			Employee employee = new Employee(null, "Tom", "0", "");
 			List<Employee> emps = mapper.getEmpsByCondition(employee);
 			for (Employee emp : emps) {
 				System.out.println(emp);

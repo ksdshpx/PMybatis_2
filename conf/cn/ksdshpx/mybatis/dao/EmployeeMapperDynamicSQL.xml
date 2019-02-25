@@ -7,18 +7,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getEmpsByCondition" resultType="cn.ksdshpx.mybatis.beans.Employee">
 		select * 
 		from tbl_employee 
-		where 
-		<if test="id!=null">
-			id = #{id} 
-		</if>
-		<if test="lastName!=null and lastName!=''">
-			and last_name = #{lastName} 
-		</if>
-		<if test="email!=null and email!=''">
-			and email = #{email} 
-		</if>
-		<if test="gender==0 or gender==1">
-			and gender = #{gender}
-		</if>
+		<where>
+			<if test="id!=null">
+				id = #{id} 
+			</if>
+			<if test="lastName!=null and lastName!=''">
+				and last_name = #{lastName} 
+			</if>
+			<if test="email!=null and email!=''">
+				and email = #{email} 
+			</if>
+			<if test="gender==0 or gender==1">
+				and gender = #{gender}
+			</if>
+		</where>
 	</select>
 </mapper>
