@@ -3,5 +3,22 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.ksdshpx.mybatis.dao.EmployeeMapperDynamicSQL">
-	
+	<!-- public List<Employee> getEmpsByCondition(Employee employee); -->
+	<select id="getEmpsByCondition" resultType="cn.ksdshpx.mybatis.beans.Employee">
+		select * 
+		from tbl_employee 
+		where 
+		<if test="id!=null">
+			id = #{id} 
+		</if>
+		<if test="lastName!=null and lastName!=''">
+			and last_name = #{lastName} 
+		</if>
+		<if test="email!=null and email!=''">
+			and email = #{email} 
+		</if>
+		<if test="gender==0 or gender==1">
+			and gender = #{gender}
+		</if>
+	</select>
 </mapper>

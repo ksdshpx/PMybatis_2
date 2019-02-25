@@ -93,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	-->
 	<mappers>
 		<mapper resource="cn/ksdshpx/mybatis/dao/EmployeeMapper.xml" />
+		<mapper resource="cn/ksdshpx/mybatis/dao/EmployeeMapperDynamicSQL.xml" />
 		<mapper resource="cn/ksdshpx/mybatis/dao/DepartmentMapper.xml" />
 		<mapper resource="cn/ksdshpx/mybatis/dao/EmployeeMapperPlus.xml" />
 		<mapper class="cn.ksdshpx.mybatis.dao.EmployeeMapperAnnotation"/>
