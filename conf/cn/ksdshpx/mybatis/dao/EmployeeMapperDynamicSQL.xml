@@ -48,4 +48,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</trim>
 	</select>
+	
+	<!-- public List<Employee> getEmpsByConditionChoose(Employee employee); -->
+	<select id="getEmpsByConditionChoose" resultType="cn.ksdshpx.mybatis.beans.Employee">
+		select *
+		from tbl_employee
+		<where>
+			<choose>
+				<when test="id!=null">
+					id = #{id}
+				</when>
+				<when test="lastName!=null">
+					last_name = #{lastName}
+				</when>
+				<when test="email!=null">
+					email = #{email}
+				</when>
+				<otherwise>
+					gender = 0
+				</otherwise>
+			</choose>
+		</where>
+	</select>
 </mapper>
