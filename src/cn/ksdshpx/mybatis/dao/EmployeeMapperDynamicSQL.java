@@ -15,4 +15,6 @@ public interface EmployeeMapperDynamicSQL {
 	public List<Employee> getEmpsByConditionTrim(Employee employee);
 	
 	public List<Employee> getEmpsByConditionChoose(Employee employee);
+	
+	public void updateEmployee(Employee employee);
 }
