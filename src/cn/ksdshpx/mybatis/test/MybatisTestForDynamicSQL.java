@@ -2,6 +2,7 @@ package cn.ksdshpx.mybatis.test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -47,6 +48,28 @@ public class MybatisTestForDynamicSQL {
 			}
 			//测试<set>标签
 			mapper.updateEmployee(employee);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Test
+	public void test02() throws IOException {
+		// 1.从全局配置文件中获取SqlSessionFactory对象
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		// 2.通过SqlSessionFactory得到SqlSession,获取到的sqlSession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			// 3.得到接口的代理类对象
+			EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
+			List<Employee> emps = new ArrayList<>();
+			emps.add(new Employee("AA", "1", "AA@163.com"));
+			emps.add(new Employee("BB", "0", "BB@163.com"));
+			emps.add(new Employee("CC", "1", "CC@163.com"));
+			mapper.addEmps(emps);
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();

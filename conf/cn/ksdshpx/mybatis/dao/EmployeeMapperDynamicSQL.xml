@@ -88,4 +88,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</set>
 		where id=#{id}
 	</update>
+	
+	<!-- 批量保存(mysql) mysql支持语法 insert into xxx values(),(),()-->
+	<!-- public void addEmps(@Param("emps") List<Employee> emps); -->
+	<insert id="addEmps">
+		insert into tbl_employee(last_name,gender,email) values
+		<foreach collection="emps" item="emp" separator=",">
+			(#{emp.lastName},#{emp.gender},#{emp.email})
+		</foreach>
+	</insert>
 </mapper>
