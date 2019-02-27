@@ -97,4 +97,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(#{emp.lastName},#{emp.gender},#{emp.email})
 		</foreach>
 	</insert>
+	
+	<!-- 批量保存(oracle)-->
+	<!-- public void addEmps(@Param("emps") List<Employee> emps); -->
+	<insert id="addEmps" databaseId="oracle">
+		<foreach collection="emps" item="emp" open="begin" close="end;">
+			insert into emp(empno,ename,job) values
+				(#{emp.id},#{emp.lastName},#{emp.gender});
+		</foreach>
+	</insert>
 </mapper>
