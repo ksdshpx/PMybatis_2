@@ -106,4 +106,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(#{emp.id},#{emp.lastName},#{emp.gender});
 		</foreach>
 	</insert>
+	
+	<!-- 两个内置参数
+		 不只是方法传递过来的参数可以用来被判断，取值等操作
+		 mybatis默认还有两个内置参数
+		 1)_parameter:代表整个参数
+		 		单个参数:_parameter就是这个参数
+		 		多个参数:参数会封装为一个map，_parameter就是代表这个map
+		 2)_databaseId:如果配置了databaseIdProvider标签,_databaseId就是代表当前数据库别名
+	 -->
+	 
+	 <!-- public List<Employee> getEmpsTestInnerParameter(Employee employee); -->
+	 <select id="getEmpsTestInnerParameter" resultType="cn.ksdshpx.mybatis.beans.Employee">
+	 	<if test="_databaseId=='mysql'">
+	 		select * from tbl_employee
+	 		<if test="_parameter!=null">
+	 			where last_name = #{lastName}
+	 		</if>
+	 	</if>
+	 	<if test="_databaseId=='oracle'">
+	 		select empno as id,ename as lastName from emp
+	 	</if>
+	 </select>
 </mapper>

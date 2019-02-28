@@ -22,4 +22,6 @@ public interface EmployeeMapperDynamicSQL {
 
 	// 批量添加
 	public void addEmps(@Param("emps") List<Employee> emps);
+
+	public List<Employee> getEmpsTestInnerParameter(Employee employee);
 }
