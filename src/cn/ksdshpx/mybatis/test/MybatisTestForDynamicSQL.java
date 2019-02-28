@@ -100,9 +100,15 @@ public class MybatisTestForDynamicSQL {
 	
 	/**
 	  * 两级缓存：
-	 *    1)一级缓存(本地缓存)：与数据库同一次会话期间查询到的数据放在
+	 *    1)一级缓存(本地缓存)：SqlSession级别的缓存，一直开启的，与数据库同一次会话期间查询到的数据放在
 	 *    					   本地缓存中，以后如果需要获取相同的数据，
 	 *                        直接从缓存中拿，没必要再去查询数据库
+	 *                        
+	 *            一级缓存的失效情况(没有使用到一级缓存的情况，效果就是需要再向数据库发送sql)
+	 *            1.SqlSession不同
+	 *            2.SqlSession相同，查询条件不同(当前一级缓存中还没有这个数据)
+	 *            3.SqlSession相同，两次查询之间执行了增删改操作(这次增删改可能对当前数据有影响)
+	 *            4.SqlSession相同，手动清除了一级缓存(缓存清空)
 	 *    2)二级缓存(全局缓存)：
 	 *   	
 	 * 
@@ -120,6 +126,16 @@ public class MybatisTestForDynamicSQL {
 			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 			Employee employee01 = mapper.getEmployeeById(1);
 			System.out.println(employee01);
+			//1.SqlSession不同
+			//sqlSession = sqlSessionFactory.openSession();
+			//mapper = sqlSession.getMapper(EmployeeMapper.class);
+			//2.SqlSession相同，查询条件不同
+			//Employee employee02 =mapper.getEmployeeById(3);
+			//3.SqlSession相同，两次查询之间执行了增删改操作
+			//mapper.addEmployee(new Employee(null,"testCache","1","dfs"));
+			//System.out.println("数据添加成功！");
+			//4.SqlSession相同，手动清除了一级缓存(缓存清空)
+			sqlSession.clearCache();
 			Employee employee02 =mapper.getEmployeeById(1);
 			System.out.println(employee02);
 			System.out.println(employee01 == employee02);//true
