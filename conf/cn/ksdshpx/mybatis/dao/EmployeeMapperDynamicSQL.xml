@@ -102,7 +102,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- public void addEmps(@Param("emps") List<Employee> emps); -->
 	<insert id="addEmps" databaseId="oracle">
 		<foreach collection="emps" item="emp" open="begin" close="end;">
-			insert into emp(empno,ename,job) values
+			insert into emp(
+				<include refid="addEmpsColumn"></include>	
+			) values
 				(#{emp.id},#{emp.lastName},#{emp.gender});
 		</foreach>
 	</insert>
@@ -130,4 +132,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 		select empno as id,ename as lastName from emp
 	 	</if>
 	 </select>
+	 
+	 <!-- 抽取可重用的sql片段 -->
+	 <sql id="addEmpsColumn">
+	 	empno,ename,job
+	 </sql>
 </mapper>
