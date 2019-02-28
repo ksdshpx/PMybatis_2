@@ -118,10 +118,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <!-- public List<Employee> getEmpsTestInnerParameter(Employee employee); -->
 	 <select id="getEmpsTestInnerParameter" resultType="cn.ksdshpx.mybatis.beans.Employee">
+	 	<!-- bind:可以将ognl表达式的值绑定到一个变量中，方便以后使用 -->
+	 	<bind name="_lastName" value="'%'+lastName+'%'"/>
 	 	<if test="_databaseId=='mysql'">
 	 		select * from tbl_employee
 	 		<if test="_parameter!=null">
-	 			where last_name = #{lastName}
+	 			where last_name like #{_lastName}
 	 		</if>
 	 	</if>
 	 	<if test="_databaseId=='oracle'">
