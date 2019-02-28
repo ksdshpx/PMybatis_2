@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import cn.ksdshpx.mybatis.beans.Employee;
+import cn.ksdshpx.mybatis.dao.EmployeeMapper;
 import cn.ksdshpx.mybatis.dao.EmployeeMapperDynamicSQL;
 
 /**
@@ -92,6 +93,36 @@ public class MybatisTestForDynamicSQL {
 			for (Employee emp : emps) {
 				System.out.println(emp);
 			}
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	/**
+	  * 两级缓存：
+	 *    1)一级缓存(本地缓存)：与数据库同一次会话期间查询到的数据放在
+	 *    					   本地缓存中，以后如果需要获取相同的数据，
+	 *                        直接从缓存中拿，没必要再去查询数据库
+	 *    2)二级缓存(全局缓存)：
+	 *   	
+	 * 
+	 */
+	@Test
+	public void test04() throws IOException {
+		// 1.从全局配置文件中获取SqlSessionFactory对象
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		// 2.通过SqlSessionFactory得到SqlSession,获取到的sqlSession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			// 3.得到接口的代理类对象
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			Employee employee01 = mapper.getEmployeeById(1);
+			System.out.println(employee01);
+			Employee employee02 =mapper.getEmployeeById(1);
+			System.out.println(employee02);
+			System.out.println(employee01 == employee02);//true
 		} finally {
 			sqlSession.close();
 		}
