@@ -93,13 +93,13 @@ public class MybatisTestForDynamicSQL {
 			for (Employee emp : emps) {
 				System.out.println(emp);
 			}
-		} finally {
+		} finally { 
 			sqlSession.close();
 		}
 	}
 	
 	/**
-	  * 两级缓存：
+	  * 两级缓存：(查出的数据都会默认先放到一级缓存，只有会话提交或者关闭，一级缓存中的数据才会转移到二级缓存中)
 	 *    1)一级缓存(本地缓存)：SqlSession级别的缓存，一直开启的，与数据库同一次会话期间查询到的数据放在
 	 *    					   本地缓存中，以后如果需要获取相同的数据，
 	 *                        直接从缓存中拿，没必要再去查询数据库
@@ -109,9 +109,20 @@ public class MybatisTestForDynamicSQL {
 	 *            2.SqlSession相同，查询条件不同(当前一级缓存中还没有这个数据)
 	 *            3.SqlSession相同，两次查询之间执行了增删改操作(这次增删改可能对当前数据有影响)
 	 *            4.SqlSession相同，手动清除了一级缓存(缓存清空)
-	 *    2)二级缓存(全局缓存)：
-	 *   	
-	 * 
+	 *            
+	 *    2)二级缓存(全局缓存)：基于namespace级别的缓存，一个namespace可以对应一个耳机
+	 *        工作机制:
+	 *        1、一个会话，查询一条数据，这个数据就会被放在当前会话的一级缓存中
+	 *        2、如果会话关闭，那一级缓存中的数据会被保存到二级缓存中，新的会话查询信息，就会参照二级缓存中的内容
+	 *        3、不同namespace查出的数据会被放在自己对应的缓存(map)中
+	 *          sqlSession===EmployeeMapper==>Employee
+	 *                    ===DepartmentMapper==>Department
+	 *           
+	  *        使用步骤：
+	  *        1）开启全局二级缓存配置
+	  *           <setting name="cacheEnabled" value="true"/>
+	  *        2）去mapper.xml中配置使用二级缓存
+	 *         3）Pojo需要实现序列化接口
 	 */
 	@Test
 	public void test04() throws IOException {
@@ -141,6 +152,30 @@ public class MybatisTestForDynamicSQL {
 			System.out.println(employee01 == employee02);//true
 		} finally {
 			sqlSession.close();
+		}
+	}
+	
+	@Test
+	public void test05() throws IOException {
+		// 1.从全局配置文件中获取SqlSessionFactory对象
+		String resource = "mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		// 2.通过SqlSessionFactory得到SqlSession,获取到的sqlSession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SqlSession sqlSession2 = sqlSessionFactory.openSession();
+		try {
+			// 3.得到接口的代理类对象
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			Employee employee01 = mapper.getEmployeeById(1);
+			System.out.println(employee01);
+			sqlSession.close();
+			EmployeeMapper mapper2 = sqlSession2.getMapper(EmployeeMapper.class);
+			Employee employee02 = mapper2.getEmployeeById(1);
+			System.out.println(employee02);
+			sqlSession2.close();
+		} finally {
+			
 		}
 	}
 }

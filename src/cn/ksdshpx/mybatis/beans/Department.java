@@ -1,12 +1,14 @@
 package cn.ksdshpx.mybatis.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author peng.x
  * @date 2019年2月19日 上午10:31:44
  */
-public class Department {
+public class Department implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String deptName;
 	private List<Employee> emps;

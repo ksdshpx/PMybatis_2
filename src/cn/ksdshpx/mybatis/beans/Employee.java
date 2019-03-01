@@ -1,10 +1,13 @@
 package cn.ksdshpx.mybatis.beans;
 
+import java.io.Serializable;
+
 /**
  * @author peng.x
  * @date 2019年2月14日 下午2:23:50
  */
-public class Employee {
+public class Employee implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String lastName;
 	private String gender;
