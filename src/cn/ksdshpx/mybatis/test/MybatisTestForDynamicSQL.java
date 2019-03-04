@@ -110,7 +110,7 @@ public class MybatisTestForDynamicSQL {
 	 *            3.SqlSession相同，两次查询之间执行了增删改操作(这次增删改可能对当前数据有影响)
 	 *            4.SqlSession相同，手动清除了一级缓存(缓存清空)
 	 *            
-	 *    2)二级缓存(全局缓存)：基于namespace级别的缓存，一个namespace可以对应一个耳机
+	 *    2)二级缓存(全局缓存)：基于namespace级别的缓存，一个namespace可以对应一个二级缓存
 	 *        工作机制:
 	 *        1、一个会话，查询一条数据，这个数据就会被放在当前会话的一级缓存中
 	 *        2、如果会话关闭，那一级缓存中的数据会被保存到二级缓存中，新的会话查询信息，就会参照二级缓存中的内容
@@ -123,6 +123,15 @@ public class MybatisTestForDynamicSQL {
 	  *           <setting name="cacheEnabled" value="true"/>
 	  *        2）去mapper.xml中配置使用二级缓存
 	 *         3）Pojo需要实现序列化接口
+	 *         
+	  *    和缓存有关的设置和属性
+	  *        1）cacheEnabled:设置为false只会关闭二级缓存，对一级缓存不生效
+	  *        2）每个select标签都有useCache属性，默认为true，设置为false不使用二级缓存
+	  *        3）每个增删改标签都有flushCache属性，默认为true，表示增删改操作后会清除缓存（一级缓存和二级缓存都会被清空）
+	  *        		查询标签默认也有flushCache属性，但默认为false
+	  *        4）sqlSession.clearCache()只是清除一级缓存，不会清除二级缓存
+	  *        5）localCacheScope:本地缓存作用域，默认为SESSION,当前会话的所有数据都保存在会话缓存（一级缓存）中
+	  *               	设置为STATEMENT则为禁用掉一级缓存（一般不会设置）
 	 */
 	@Test
 	public void test04() throws IOException {
